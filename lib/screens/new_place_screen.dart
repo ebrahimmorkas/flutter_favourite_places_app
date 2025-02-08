@@ -15,21 +15,29 @@ class NewPlaceScreen extends ConsumerStatefulWidget {
 class _NewPlaceScreenState extends ConsumerState<NewPlaceScreen> {
   final _formKey = GlobalKey<FormState>();
   String _enteredPlaceName = '';
+  File? selectedImage;
 
   void _addPlace() {
     if (_formKey.currentState!.validate()) {
+      // if (_enteredPlaceName.isNotEmpty) {
       // Form is validated
       _formKey.currentState!.save();
-      ref.read(placeProvider.notifier).addPlace(
-          Place(id: DateTime.now().toString(), placeName: _enteredPlaceName));
+      ref.read(placeProvider.notifier).addPlace(Place(
+            id: DateTime.now().toString(),
+            placeName: _enteredPlaceName,
+            image: selectedImage!,
+          ));
       Navigator.pop(context);
+      // } else {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     SnackBar(content: Text("Please select image")),
+      //   );
+      // }
     } else {
       // Form in not validated
       return;
     }
   }
-
-  File? selectedImage;
 
   void takePicture() async {
     final ImagePicker imagePicker = ImagePicker();

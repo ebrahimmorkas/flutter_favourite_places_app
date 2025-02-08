@@ -15,8 +15,14 @@ class _PlaceListTileState extends State<PlaceListTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: ListTile(
-        title: Text(widget.place.placeName),
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: ListTile(
+          leading: CircleAvatar(
+            backgroundImage: FileImage(widget.place.image),
+          ),
+          title: Text(widget.place.placeName),
+        ),
       ),
       onTap: () {
         Navigator.push(
