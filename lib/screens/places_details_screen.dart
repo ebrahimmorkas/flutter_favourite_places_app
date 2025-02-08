@@ -17,6 +17,15 @@ class _PlacesDetailsScreenState extends State<PlacesDetailsScreen> {
       appBar: AppBar(
         title: Text(widget.place.placeName),
       ),
+      body: Stack(
+        children: [
+          Image.file(
+            widget.place.image,
+            width: double.infinity,
+            height: double.infinity,
+          ),
+        ],
+      ),
     );
   }
 }
