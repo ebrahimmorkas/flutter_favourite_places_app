@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 
 class LocationInput extends StatefulWidget {
-  final Function(String) mapImageStringUrl;
+  final Function(double, double, String, String) mapImageStringUrl;
   const LocationInput({super.key, required this.mapImageStringUrl});
   // const LocationInput({super.key});
 
@@ -54,12 +54,12 @@ class _LocationInputState extends State<LocationInput> {
 
     setState(() {
       print("Set State called");
+
+      // URL to get the image of the map that shows the exact location
       mapImageUrl =
           'https://maps.googleapis.com/maps/api/staticmap?center=$latitude,$longitude,CA&zoom=16&size=400x400&key=${dotenv.env['GOOGLE_MAP_API_KEY']}';
       print(mapImageUrl);
     });
-
-    widget.mapImageStringUrl(mapImageUrl!);
 
     // Getting the exact location from google map API
     try {
@@ -74,6 +74,9 @@ class _LocationInputState extends State<LocationInput> {
 
         String formattedAddress = data['results'][0]['formatted_address'];
         print(formattedAddress);
+
+        widget.mapImageStringUrl(
+            latitude, longitude, formattedAddress, mapImageUrl!);
 
         setState(() {
           isGettingLocation = false;

@@ -22,6 +22,7 @@ class _PlaceListTileState extends State<PlaceListTile> {
             backgroundImage: FileImage(widget.place.image),
           ),
           title: Text(widget.place.placeName),
+          subtitle: Text(widget.place.locationOnMap.formattedAddress),
         ),
       ),
       onTap: () {

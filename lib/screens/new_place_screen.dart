@@ -1,3 +1,4 @@
+import 'package:chat_app/models/location_on_map.dart';
 import 'package:chat_app/models/place.dart';
 import 'package:chat_app/widgets/location_input.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +15,16 @@ class NewPlaceScreen extends ConsumerStatefulWidget {
 }
 
 class _NewPlaceScreenState extends ConsumerState<NewPlaceScreen> {
+  double? latitude;
+  double? longitude;
+  String? formattedAddress;
   String? mapImageUrl;
-  void getMapImageUrl(String mapUrl) {
+  void getMapImageUrlAndData(double locationLatitude, double locationLongitude,
+      String locationFormattedAddress, String mapUrl) {
     setState(() {
+      latitude = locationLatitude;
+      longitude = locationLongitude;
+      formattedAddress = locationFormattedAddress;
       mapImageUrl = mapUrl;
     });
   }
@@ -32,10 +40,13 @@ class _NewPlaceScreenState extends ConsumerState<NewPlaceScreen> {
       // Form is validated
       _formKey.currentState!.save();
       ref.read(placeProvider.notifier).addPlace(Place(
-            id: DateTime.now().toString(),
-            placeName: _enteredPlaceName,
-            image: selectedImage!,
-          ));
+          id: DateTime.now().toString(),
+          placeName: _enteredPlaceName,
+          image: selectedImage!,
+          locationOnMap: LocationOnMap(
+              latitude: latitude!,
+              longitude: longitude!,
+              formattedAddress: formattedAddress!)));
       Navigator.pop(context);
       // } else {
       //   ScaffoldMessenger.of(context).showSnackBar(
@@ -128,7 +139,7 @@ class _NewPlaceScreenState extends ConsumerState<NewPlaceScreen> {
                   height: 10,
                 ),
                 LocationInput(
-                  mapImageStringUrl: getMapImageUrl,
+                  mapImageStringUrl: getMapImageUrlAndData,
                 ),
                 const SizedBox(
                   height: 10,
