@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:chat_app/screens/home_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:chat_app/providers/place_provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final colorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
@@ -27,7 +28,8 @@ final theme = ThemeData().copyWith(
   ),
 );
 
-void main() {
+Future main() async {
+  await dotenv.load(fileName: ".env");
   runApp(
     ProviderScope(
       child: const MyApp(),

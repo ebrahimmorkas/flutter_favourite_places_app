@@ -19,6 +19,7 @@ class _NewPlaceScreenState extends ConsumerState<NewPlaceScreen> {
   File? selectedImage;
 
   void _addPlace() {
+    print("Add place function called");
     if (_formKey.currentState!.validate()) {
       // if (_enteredPlaceName.isNotEmpty) {
       // Form is validated
@@ -41,6 +42,7 @@ class _NewPlaceScreenState extends ConsumerState<NewPlaceScreen> {
   }
 
   void takePicture() async {
+    print("Take picture function called");
     final ImagePicker imagePicker = ImagePicker();
     final pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
     if (pickedImage == null) {
