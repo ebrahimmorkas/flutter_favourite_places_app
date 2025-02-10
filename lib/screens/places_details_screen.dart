@@ -28,9 +28,15 @@ class _PlacesDetailsScreenState extends State<PlacesDetailsScreen> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: CircleAvatar(
-              radius: 70.0,
-              child: Image.network(''),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 70.0,
+                  child: Image.network(widget.place.locationOnMap.imageUrl),
+                ),
+                Text(widget.place.locationOnMap.formattedAddress),
+              ],
             ),
           ),
         ],

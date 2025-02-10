@@ -39,14 +39,19 @@ class _NewPlaceScreenState extends ConsumerState<NewPlaceScreen> {
       // if (_enteredPlaceName.isNotEmpty) {
       // Form is validated
       _formKey.currentState!.save();
-      ref.read(placeProvider.notifier).addPlace(Place(
-          id: DateTime.now().toString(),
-          placeName: _enteredPlaceName,
-          image: selectedImage!,
-          locationOnMap: LocationOnMap(
-              latitude: latitude!,
-              longitude: longitude!,
-              formattedAddress: formattedAddress!)));
+      ref.read(placeProvider.notifier).addPlace(
+            Place(
+              id: DateTime.now().toString(),
+              placeName: _enteredPlaceName,
+              image: selectedImage!,
+              locationOnMap: LocationOnMap(
+                latitude: latitude!,
+                longitude: longitude!,
+                formattedAddress: formattedAddress!,
+                imageUrl: mapImageUrl!,
+              ),
+            ),
+          );
       Navigator.pop(context);
       // } else {
       //   ScaffoldMessenger.of(context).showSnackBar(

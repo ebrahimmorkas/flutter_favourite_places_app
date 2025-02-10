@@ -66,6 +66,7 @@ class _LocationInputState extends State<LocationInput> {
       print("Inside try block");
       var url = Uri.parse(
           'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=${dotenv.env['GOOGLE_MAP_API_KEY']}');
+      // 'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=${dotenv.env['GOOGLE_MAP_API_KEY']}&language=en');
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
