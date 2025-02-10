@@ -14,6 +14,13 @@ class NewPlaceScreen extends ConsumerStatefulWidget {
 }
 
 class _NewPlaceScreenState extends ConsumerState<NewPlaceScreen> {
+  String? mapImageUrl;
+  void getMapImageUrl(String mapUrl) {
+    setState(() {
+      mapImageUrl = mapUrl;
+    });
+  }
+
   final _formKey = GlobalKey<FormState>();
   String _enteredPlaceName = '';
   File? selectedImage;
@@ -120,7 +127,9 @@ class _NewPlaceScreenState extends ConsumerState<NewPlaceScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                LocationInput(),
+                LocationInput(
+                  mapImageStringUrl: getMapImageUrl,
+                ),
                 const SizedBox(
                   height: 10,
                 ),

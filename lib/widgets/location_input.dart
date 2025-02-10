@@ -5,7 +5,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 
 class LocationInput extends StatefulWidget {
-  const LocationInput({super.key});
+  final Function(String) mapImageStringUrl;
+  const LocationInput({super.key, required this.mapImageStringUrl});
+  // const LocationInput({super.key});
 
   @override
   State<LocationInput> createState() => _LocationInputState();
@@ -13,6 +15,9 @@ class LocationInput extends StatefulWidget {
 
 class _LocationInputState extends State<LocationInput> {
   bool isGettingLocation = false;
+  bool isLocationFetched = false;
+  String? mapImageUrl;
+
   void getCurrentLocation() async {
     print("Location function called");
     Location location = Location();
@@ -47,6 +52,15 @@ class _LocationInputState extends State<LocationInput> {
     double latitude = locationData.latitude!;
     double longitude = locationData.longitude!;
 
+    setState(() {
+      print("Set State called");
+      mapImageUrl =
+          'https://maps.googleapis.com/maps/api/staticmap?center=$latitude,$longitude,CA&zoom=16&size=400x400&key=${dotenv.env['GOOGLE_MAP_API_KEY']}';
+      print(mapImageUrl);
+    });
+
+    widget.mapImageStringUrl(mapImageUrl!);
+
     // Getting the exact location from google map API
     try {
       print("Inside try block");
@@ -60,6 +74,11 @@ class _LocationInputState extends State<LocationInput> {
 
         String formattedAddress = data['results'][0]['formatted_address'];
         print(formattedAddress);
+
+        setState(() {
+          isGettingLocation = false;
+          isLocationFetched = true;
+        });
       } else {
         // Some problem
         return;
@@ -69,10 +88,6 @@ class _LocationInputState extends State<LocationInput> {
       print("Error has been made");
       print(error);
     }
-
-    setState(() {
-      isGettingLocation = false;
-    });
 
     print("Getting Location false");
   }
@@ -92,8 +107,12 @@ class _LocationInputState extends State<LocationInput> {
           width: double.infinity,
           height: 250,
           child: isGettingLocation
-              ? CircularProgressIndicator()
-              : Text("No location selected"),
+              ? isLocationFetched
+                  ? Image.network(mapImageUrl!)
+                  : CircularProgressIndicator()
+              : isLocationFetched
+                  ? Image.network(mapImageUrl!)
+                  : Text("No location selected"),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
