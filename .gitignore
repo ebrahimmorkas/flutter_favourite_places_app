@@ -46,3 +46,6 @@ app.*.map.json
 
 # Environment file
 .env
+
+# Ignoring the android manifest since it contains API KEY after project we will push it
+/android/app/src/main/AndroidManifest.xml
