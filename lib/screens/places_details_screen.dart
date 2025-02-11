@@ -39,6 +39,7 @@ class _PlacesDetailsScreenState extends State<PlacesDetailsScreen> {
                       MaterialPageRoute(
                         builder: (context) => MapScreen(
                           location: widget.place.locationOnMap,
+                          isSelecting: false,
                         ),
                       ),
                     );

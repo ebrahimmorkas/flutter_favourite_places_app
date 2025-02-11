@@ -1,4 +1,6 @@
+import 'package:chat_app/screens/map_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -16,9 +18,13 @@ class LocationInput extends StatefulWidget {
 class _LocationInputState extends State<LocationInput> {
   bool isGettingLocation = false;
   bool isLocationFetched = false;
+  bool isSelectingMap = false;
   String? mapImageUrl;
 
-  void getCurrentLocation() async {
+  // This variable will contain the latitude and longitude that will be returned when someone manually selects the location by clicking on button names 'select on map'.
+  LatLng? position;
+
+  void getCurrentLocation(bool isFunctionCalled) async {
     print("Location function called");
     Location location = Location();
 
@@ -48,10 +54,27 @@ class _LocationInputState extends State<LocationInput> {
 
     print("Getting location is true");
 
-    locationData = await location.getLocation();
-    double latitude = locationData.latitude!;
-    double longitude = locationData.longitude!;
+    // This two variables will store the latitude and longitude that can be either by getting the location automatically or it can be by selecting the position manually
+    double? latitude;
+    double? longitude;
 
+    if (isFunctionCalled) {
+      print("true");
+      if (position == null) {
+        return;
+      }
+      setState(() {
+        latitude = position!.latitude;
+        longitude = position!.longitude;
+      });
+    } else {
+      print("false");
+      locationData = await location.getLocation();
+      setState(() {
+        latitude = locationData.latitude!;
+        longitude = locationData.longitude!;
+      });
+    }
     setState(() {
       print("Set State called");
       print(latitude);
@@ -79,7 +102,7 @@ class _LocationInputState extends State<LocationInput> {
         print(formattedAddress);
 
         widget.mapImageStringUrl(
-            latitude, longitude, formattedAddress, mapImageUrl!);
+            latitude!, longitude!, formattedAddress, mapImageUrl!);
 
         setState(() {
           isGettingLocation = false;
@@ -124,12 +147,26 @@ class _LocationInputState extends State<LocationInput> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             TextButton.icon(
-              onPressed: getCurrentLocation,
+              onPressed: () {
+                getCurrentLocation(false);
+              },
               label: Text("Get Current Location"),
               icon: Icon(Icons.location_on),
             ),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: () async {
+                LatLng returnedPosition = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MapScreen(isSelecting: true),
+                  ),
+                );
+                setState(() {
+                  position = returnedPosition;
+                });
+
+                getCurrentLocation(true);
+              },
               label: Text("Select on map"),
               icon: Icon(Icons.map),
             ),
