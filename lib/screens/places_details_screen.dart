@@ -1,4 +1,5 @@
 import 'package:chat_app/models/place.dart';
+import 'package:chat_app/screens/map_screen.dart';
 import 'package:flutter/material.dart';
 
 class PlacesDetailsScreen extends StatefulWidget {
@@ -31,9 +32,19 @@ class _PlacesDetailsScreenState extends State<PlacesDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CircleAvatar(
-                  radius: 70.0,
-                  child: Image.network(widget.place.locationOnMap.imageUrl),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MapScreen(),
+                      ),
+                    );
+                  },
+                  child: CircleAvatar(
+                    radius: 70.0,
+                    child: Image.network(widget.place.locationOnMap.imageUrl),
+                  ),
                 ),
                 Text(widget.place.locationOnMap.formattedAddress),
               ],

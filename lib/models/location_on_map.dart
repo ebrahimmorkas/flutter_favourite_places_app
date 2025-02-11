@@ -1,5 +1,5 @@
 class LocationOnMap {
-  LocationOnMap({
+  const LocationOnMap({
     required this.latitude,
     required this.longitude,
     required this.formattedAddress,
