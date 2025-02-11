@@ -49,3 +49,6 @@ app.*.map.json
 
 # Ignoring the android manifest since it contains API KEY after project we will push it
 /android/app/src/main/AndroidManifest.xml
+
+# Ignoring IOS config file it will be added once project is finished
+/ios/Runner/AppDelegate.swift
