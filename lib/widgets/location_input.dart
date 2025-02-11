@@ -54,6 +54,8 @@ class _LocationInputState extends State<LocationInput> {
 
     setState(() {
       print("Set State called");
+      print(latitude);
+      print(longitude);
 
       // URL to get the image of the map that shows the exact location
       mapImageUrl =
