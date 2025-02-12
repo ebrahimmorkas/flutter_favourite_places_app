@@ -14,6 +14,12 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
+  void initState() {
+    super.initState();
+    ref.read(placeProvider.notifier).loadData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final List<Place> placesList = ref.watch(placeProvider);
 
