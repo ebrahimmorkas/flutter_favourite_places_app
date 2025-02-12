@@ -34,7 +34,7 @@ class _NewPlaceScreenState extends ConsumerState<NewPlaceScreen> {
   File? selectedImage;
 
   void _addPlace() {
-    print("Add place function called");
+    // print("Add place function called");
     if (_formKey.currentState!.validate()) {
       // if (_enteredPlaceName.isNotEmpty) {
       // Form is validated
@@ -65,7 +65,7 @@ class _NewPlaceScreenState extends ConsumerState<NewPlaceScreen> {
   }
 
   void takePicture() async {
-    print("Take picture function called");
+    // print("Take picture function called");
     final ImagePicker imagePicker = ImagePicker();
     final pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
     if (pickedImage == null) {
@@ -93,7 +93,14 @@ class _NewPlaceScreenState extends ConsumerState<NewPlaceScreen> {
               children: [
                 TextFormField(
                   maxLength: 50,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                   decoration: InputDecoration(
+                    hintText: "Enter place name",
+                    hintStyle: TextStyle(
+                      color: Colors.white,
+                    ),
                     label: Text("Name"),
                   ),
                   validator: (value) {

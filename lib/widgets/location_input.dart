@@ -25,7 +25,7 @@ class _LocationInputState extends State<LocationInput> {
   LatLng? position;
 
   void getCurrentLocation(bool isFunctionCalled) async {
-    print("Location function called");
+    // print("Location function called");
     Location location = Location();
 
     bool serviceEnabled;
@@ -52,14 +52,14 @@ class _LocationInputState extends State<LocationInput> {
       isGettingLocation = true;
     });
 
-    print("Getting location is true");
+    // print("Getting location is true");
 
     // This two variables will store the latitude and longitude that can be either by getting the location automatically or it can be by selecting the position manually
     double? latitude;
     double? longitude;
 
     if (isFunctionCalled) {
-      print("true");
+      // print("true");
       if (position == null) {
         return;
       }
@@ -68,7 +68,7 @@ class _LocationInputState extends State<LocationInput> {
         longitude = position!.longitude;
       });
     } else {
-      print("false");
+      // print("false");
       locationData = await location.getLocation();
       setState(() {
         latitude = locationData.latitude!;
@@ -76,19 +76,19 @@ class _LocationInputState extends State<LocationInput> {
       });
     }
     setState(() {
-      print("Set State called");
-      print(latitude);
-      print(longitude);
+      // print("Set State called");
+      // print(latitude);
+      // print(longitude);
 
       // URL to get the image of the map that shows the exact location
       mapImageUrl =
           'https://maps.googleapis.com/maps/api/staticmap?center=$latitude,$longitude,CA&zoom=16&size=400x400&key=${dotenv.env['GOOGLE_MAP_API_KEY']}';
-      print(mapImageUrl);
+      // print(mapImageUrl);
     });
 
     // Getting the exact location from google map API
     try {
-      print("Inside try block");
+      // print("Inside try block");
       var url = Uri.parse(
           'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=${dotenv.env['GOOGLE_MAP_API_KEY']}');
       // 'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=${dotenv.env['GOOGLE_MAP_API_KEY']}&language=en');
@@ -99,7 +99,7 @@ class _LocationInputState extends State<LocationInput> {
         Map<String, dynamic> data = jsonDecode(response.body);
 
         String formattedAddress = data['results'][0]['formatted_address'];
-        print(formattedAddress);
+        // print(formattedAddress);
 
         widget.mapImageStringUrl(
             latitude!, longitude!, formattedAddress, mapImageUrl!);
@@ -114,11 +114,11 @@ class _LocationInputState extends State<LocationInput> {
       }
     } catch (error) {
       // Catch block
-      print("Error has been made");
-      print(error);
+      // print("Error has been made");
+      // print(error);
     }
 
-    print("Getting Location false");
+    // print("Getting Location false");
   }
 
   @override
@@ -141,7 +141,10 @@ class _LocationInputState extends State<LocationInput> {
                   : CircularProgressIndicator()
               : isLocationFetched
                   ? Image.network(mapImageUrl!)
-                  : Text("No location selected"),
+                  : Text("No location selected",
+                      style: TextStyle(
+                        color: const Color.fromARGB(255, 10, 102, 177),
+                      )),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

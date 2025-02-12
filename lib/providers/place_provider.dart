@@ -58,10 +58,10 @@ class PlaceProvider extends StateNotifier<List<Place>> {
     final int isDeleted =
         await db.delete('user_places', where: 'id = ?', whereArgs: [id]);
     if (isDeleted == 1) {
-      print("Deleted");
+      // print("Deleted");
       return 1;
     } else {
-      print("Not deleted");
+      // print("Not deleted");
       return 0;
     }
   }

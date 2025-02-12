@@ -74,7 +74,7 @@ class _MapScreenState extends State<MapScreen> {
         onTap: widget.isSelecting
             ? (position) {
                 setState(() {
-                  print("inside set state of map screen");
+                  // print("inside set state of map screen");
                   selectedPosition = position;
                 });
               }

@@ -27,7 +27,7 @@ class _PlaceListTileState extends ConsumerState<PlaceListTile> {
           subtitle: Text(widget.place.locationOnMap.formattedAddress),
           trailing: InkWell(
             onTap: () {
-              print("Delete button clicked");
+              // print("Delete button clicked");
               ref.read(placeProvider.notifier).delete(widget.place.id);
             },
             child: Icon(

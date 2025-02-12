@@ -46,10 +46,17 @@ class _PlacesDetailsScreenState extends State<PlacesDetailsScreen> {
                   },
                   child: CircleAvatar(
                     radius: 70.0,
-                    child: Image.network(widget.place.locationOnMap.imageUrl),
+                    backgroundImage:
+                        NetworkImage(widget.place.locationOnMap.imageUrl),
                   ),
                 ),
-                Text(widget.place.locationOnMap.formattedAddress),
+                Text(
+                  widget.place.locationOnMap.formattedAddress,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ],
             ),
           ),
