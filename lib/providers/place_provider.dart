@@ -49,6 +49,24 @@ class PlaceProvider extends StateNotifier<List<Place>> {
     state = places;
   }
 
+// Function that will delete the data from device
+  Future<int> delete(String id) async {
+    state = state.where((element) {
+      return element.id != id;
+    }).toList();
+    final db = await openDatabase();
+    final int isDeleted =
+        await db.delete('user_places', where: 'id = ?', whereArgs: [id]);
+    if (isDeleted == 1) {
+      print("Deleted");
+      return 1;
+    } else {
+      print("Not deleted");
+      return 0;
+    }
+  }
+
+// Function that will add the place in memory as well as state
   void addPlace(Place place) async {
     // this line gets the path in which system was storing the data normally
     final appDir = await path_provider.getApplicationDocumentsDirectory();
